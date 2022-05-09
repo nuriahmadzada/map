@@ -1,0 +1,10 @@
+<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChange($event)">
+  <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"></agm-marker>
+</agm-map>
+
+<h5 class="text-end mb-1">Address: {{address}}</h5>
+<div class="text-end">Latitude: {{latitude}}</div>
+<div class="text-end">Longitude: {{longitude}}</div>
+
+
+<app-preloader [showPreloader]="isLoading"></app-preloader>

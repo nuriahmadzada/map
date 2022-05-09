@@ -1,0 +1,21 @@
+.preload {
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-color: #100808ba;
+  opacity: 90%;
+}
+
+.preload .spinner-grow {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 46%;
+  width: 5rem;
+  height: 5rem;
+}
