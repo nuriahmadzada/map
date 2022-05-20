@@ -8,3 +8,19 @@
 
 
 <app-preloader [showPreloader]="isLoading"></app-preloader>
+
+
+<!-- <mat-form-field>
+  <mat-label>Address {{address}}</mat-label>
+  <input matInput matGoogleMapsAutocomplete [country]="de" (onAutocompleteSelected)="onAutocompleteSelected($event)"
+    (onLocationSelected)="onLocationSelected($event)">
+</mat-form-field> -->
+
+<!-- <form [formGroup]="addressFormGroup">
+  <mat-search-google-maps-autocomplete formControlName="address">
+  </mat-search-google-maps-autocomplete>
+</form> -->
+
+<mat-google-maps-autocomplete [appearance]="appearance.OUTLINE"
+  (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)">
+</mat-google-maps-autocomplete>

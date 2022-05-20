@@ -128,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "mapTaxi"
+  "defaultProject": "mapTaxi",
+  "cli": {
+    "analytics": "fd5f91ab-d64f-4564-8122-b5f35286a894"
+  }
 }

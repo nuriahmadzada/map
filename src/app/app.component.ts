@@ -1,10 +1,13 @@
 import { MapsAPILoader, MouseEvent, AgmMap } from '@agm/core';
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import PlaceResult = google.maps.places.PlaceResult;
+import { Location, Appearance, GermanAddress } from '@angular-material-extensions/google-maps-autocomplete';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
   @ViewChild('search') public searchElementRef: ElementRef;
@@ -18,7 +21,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    public selectedAddress: PlaceResult
   ) { }
 
   ngOnInit() {
@@ -35,6 +39,20 @@ export class AppComponent implements OnInit {
   //   const distance = google.maps.geometry.spherical.computeDistanceBetween(mexicoCity, jacksonville);
   //   console.log(distance, "dist");
   // }
+
+  onAutocompleteSelected(result: PlaceResult) {
+    console.log('onAutocompleteSelected: ', result);
+  }
+
+  onLocationSelected(location: Location) {
+    console.log('onLocationSelected: ', location);
+    this.latitude = location.latitude;
+    this.longitude = location.longitude;
+  }
+
+  onGermanAddressMapped($event: GermanAddress) {
+    console.log('onGermanAddressMapped', $event);
+  }
 
   onChange(event: MouseEvent) {
     console.log(event, "ev");
