@@ -51,14 +51,15 @@ export class AppComponent implements OnInit {
   }
 
   handleAddressChange(event) {
-    console.log(event);
-    this.destination = { lat: event.geometry.location.lat, lng: event.geometry.location.lng };
+    this.destination = { lat: event.geometry.location.lat(), lng: event.geometry.location.lng() };
+    this.onChange(event, 'c');
   }
 
-  onChange(event: MouseEvent) {
+  onChange(event: any, code: string) {
     this.showPolylines = true;
     this.origin = { lat: this.latitude, lng: this.longitude };
-    this.destination = { lat: event.coords.lat, lng: event.coords.lng };
+    this.destination = code === 'c' ? { lat: event.geometry.location.lat(), lng: event.geometry.location.lng() } :
+      this.destination = { lat: event.coords.lat, lng: event.coords.lng };
   }
 
   changePolyline(event: any) {
@@ -66,7 +67,7 @@ export class AppComponent implements OnInit {
     this.time = event.routes[0].legs[0].duration.text;
   }
 
-  private setCurrentLocation() {
+  setCurrentLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;

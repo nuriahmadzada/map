@@ -1,15 +1,12 @@
-<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChange($event)">
+<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChange($event, 'h')">
   <agm-marker *ngIf="!showPolylines" [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"></agm-marker>
     <agm-direction *ngIf="showPolylines" [origin]="origin" [destination]="destination" [renderOptions]="renderOptions"
     [markerOptions]="markerOptions" (onChange)="changePolyline($event)">
     </agm-direction>
 </agm-map>
 
-<h5 class="mb-1">Current address: {{address}}</h5>
-<div>Latitude: {{latitude}}</div>
-<div>Longitude: {{longitude}}</div>
-<div *ngIf="distance">Distance: {{distance}}</div>
-<div *ngIf="distance">Time: {{time}}</div>
+<h4 class="mb-1">Current address: {{address}}</h4>
+<div *ngIf="distance">Distance: {{distance}}, Time: {{time}}</div>
 
 <div class="search">
   <i class="fas fa-search"></i>
