@@ -16,7 +16,7 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     BrowserAnimationsModule,
     SharedModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDuZa8SmS1i01Jm0ScPX1D19b-ekPCoZdw',
+      apiKey: '<GOOGLE_API_KEY>',
       libraries: ['places']
     }),
     AgmDirectionModule,
