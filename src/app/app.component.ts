@@ -1,7 +1,5 @@
 import { MapsAPILoader, MouseEvent, AgmMap } from '@agm/core';
 import { Component, ElementRef, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import PlaceResult = google.maps.places.PlaceResult;
-import { Location, Appearance, GermanAddress } from '@angular-material-extensions/google-maps-autocomplete';
 
 @Component({
   selector: 'app-root',
@@ -10,52 +8,54 @@ import { Location, Appearance, GermanAddress } from '@angular-material-extension
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
-  @ViewChild('search') public searchElementRef: ElementRef;
-  title: string = 'AGM project';
+  title: string = 'Google Maps';
   latitude: number;
   longitude: number;
   zoom: number;
   address: string;
   private geoCoder;
   isLoading: boolean = true;
+  origin: any;
+  destination: any;
+  showPolylines: boolean;
+  distance: any;
+  time: any;
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone,
-    public selectedAddress: PlaceResult
   ) { }
+
+  public renderOptions = {
+    suppressMarkers: true,
+  }
+
+  public markerOptions = {
+    origin: {
+      draggable: true,
+    },
+    destination: {
+      draggable: true,
+      opacity: 0.6,
+    },
+  }
 
   ngOnInit() {
     this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
     });
-    // this.calculateDistance();
-  }
-
-  // calculateDistance() {
-  //   const mexicoCity = new google.maps.LatLng(19.432608, -99.133209);
-  //   const jacksonville = new google.maps.LatLng(40.730610, -73.935242);
-  //   const distance = google.maps.geometry.spherical.computeDistanceBetween(mexicoCity, jacksonville);
-  //   console.log(distance, "dist");
-  // }
-
-  onAutocompleteSelected(result: PlaceResult) {
-    console.log('onAutocompleteSelected: ', result);
-  }
-
-  onLocationSelected(location: Location) {
-    console.log('onLocationSelected: ', location);
-    this.latitude = location.latitude;
-    this.longitude = location.longitude;
-  }
-
-  onGermanAddressMapped($event: GermanAddress) {
-    console.log('onGermanAddressMapped', $event);
   }
 
   onChange(event: MouseEvent) {
+    this.showPolylines = true;
+    this.origin = { lat: this.latitude, lng: this.longitude };
+    this.destination = { lat: event.coords.lat, lng: event.coords.lng };
+  }
+
+  changePolyline(event: any) {
     console.log(event, "ev");
+    this.distance = event.routes[0].legs[0].distance.text;
+    this.time = event.routes[0].legs[0].duration.text;
   }
 
   private setCurrentLocation() {

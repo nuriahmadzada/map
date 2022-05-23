@@ -1,26 +1,15 @@
 <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChange($event)">
-  <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"></agm-marker>
+  <agm-marker *ngIf="!showPolylines" [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"></agm-marker>
+    <agm-direction *ngIf="showPolylines" [origin]="origin" [destination]="destination" [renderOptions]="renderOptions"
+    [markerOptions]="markerOptions" (onChange)="changePolyline($event)">
+    </agm-direction>
 </agm-map>
 
-<h5 class="text-end mb-1">Address: {{address}}</h5>
-<div class="text-end">Latitude: {{latitude}}</div>
-<div class="text-end">Longitude: {{longitude}}</div>
+<h5 class="mb-1">Current address: {{address}}</h5>
+<div>Latitude: {{latitude}}</div>
+<div>Longitude: {{longitude}}</div>
+<div *ngIf="distance">Distance: {{distance}}</div>
+<div *ngIf="distance">Time: {{time}}</div>
 
 
 <app-preloader [showPreloader]="isLoading"></app-preloader>
-
-
-<!-- <mat-form-field>
-  <mat-label>Address {{address}}</mat-label>
-  <input matInput matGoogleMapsAutocomplete [country]="de" (onAutocompleteSelected)="onAutocompleteSelected($event)"
-    (onLocationSelected)="onLocationSelected($event)">
-</mat-form-field> -->
-
-<!-- <form [formGroup]="addressFormGroup">
-  <mat-search-google-maps-autocomplete formControlName="address">
-  </mat-search-google-maps-autocomplete>
-</form> -->
-
-<mat-google-maps-autocomplete [appearance]="appearance.OUTLINE"
-  (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)">
-</mat-google-maps-autocomplete>
