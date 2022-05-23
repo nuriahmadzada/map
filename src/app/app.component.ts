@@ -1,11 +1,10 @@
-import { MapsAPILoader, MouseEvent, AgmMap } from '@agm/core';
-import { Component, ElementRef, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MapsAPILoader, MouseEvent } from '@agm/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
   title: string = 'Google Maps';
@@ -20,16 +19,15 @@ export class AppComponent implements OnInit {
   showPolylines: boolean;
   distance: any;
   time: any;
-
-  constructor(
-    private mapsAPILoader: MapsAPILoader,
-  ) { }
-
-  public renderOptions = {
+  options = {
+    componentRestrictions: {
+      country: ['AZ']
+    }
+  };
+  renderOptions = {
     suppressMarkers: true,
-  }
-
-  public markerOptions = {
+  };
+  markerOptions = {
     origin: {
       draggable: true,
     },
@@ -37,13 +35,24 @@ export class AppComponent implements OnInit {
       draggable: true,
       opacity: 0.6,
     },
-  }
+  };
+
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+  ) { }
+
+
 
   ngOnInit() {
     this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
     });
+  }
+
+  handleAddressChange(event) {
+    console.log(event);
+    this.destination = { lat: event.geometry.location.lat, lng: event.geometry.location.lng };
   }
 
   onChange(event: MouseEvent) {
@@ -53,7 +62,6 @@ export class AppComponent implements OnInit {
   }
 
   changePolyline(event: any) {
-    console.log(event, "ev");
     this.distance = event.routes[0].legs[0].distance.text;
     this.time = event.routes[0].legs[0].duration.text;
   }

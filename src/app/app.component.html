@@ -11,5 +11,11 @@
 <div *ngIf="distance">Distance: {{distance}}</div>
 <div *ngIf="distance">Time: {{time}}</div>
 
+<div class="search">
+  <i class="fas fa-search"></i>
+  <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+    (onAddressChange)="handleAddressChange($event)" class="form-control" placeholder="Ünvan daxil et" />
+</div>
+
 
 <app-preloader [showPreloader]="isLoading"></app-preloader>

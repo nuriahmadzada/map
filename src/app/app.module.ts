@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../app/shared/shared.module';
 import { AgmDirectionModule } from 'agm-direction';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AgmDirectionModule } from 'agm-direction';
       apiKey: 'AIzaSyDuZa8SmS1i01Jm0ScPX1D19b-ekPCoZdw',
       libraries: ['places']
     }),
-    AgmDirectionModule
+    AgmDirectionModule,
+    GooglePlaceModule
   ],
   providers: [],
   bootstrap: [AppComponent]

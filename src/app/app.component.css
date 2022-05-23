@@ -1,3 +1,21 @@
-agm-map{
+agm-map {
   height: 400px;
+}
+
+.search {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+
+.search .fas {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  color: gray;
+}
+
+.search .form-control {
+  width: 350px;
+  padding-left: 35px;
 }
