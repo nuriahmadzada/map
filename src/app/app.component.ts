@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   latitude: number;
   longitude: number;
   zoom: number;
-  address: string;
+  address: string = "";
   private geoCoder;
   isLoading: boolean = true;
   origin: any;
@@ -19,6 +19,8 @@ export class AppComponent implements OnInit {
   showPolylines: boolean;
   distance: any;
   time: any;
+  adres: string;
+  price: number;
   options = {
     componentRestrictions: {
       country: ['AZ']
@@ -37,11 +39,42 @@ export class AppComponent implements OnInit {
     },
   };
 
+  taxiCompanies = [
+    {
+      id: 1,
+      name: "Bolt",
+      icon: "bolt.png",
+      contact: "070 283-4525",
+      minPaymentPerKm: 0.34,
+      maxPaymentPerkm: 1.328,
+      price: 0,
+      time: 0
+    },
+    {
+      id: 2,
+      name: "Uber",
+      icon: "uber.png",
+      contact: "070 283-4525",
+      minPaymentPerKm: 0.27,
+      maxPaymentPerkm: 1.719,
+      price: 0,
+      time: 0
+    },
+    {
+      id: 3,
+      name: "Maxim",
+      icon: "maxim.png",
+      contact: "070 283-4525",
+      minPaymentPerKm: 0.48,
+      maxPaymentPerkm: 1.129,
+      price: 0,
+      time: 0
+    }
+  ]
+
   constructor(
     private mapsAPILoader: MapsAPILoader,
   ) { }
-
-
 
   ngOnInit() {
     this.mapsAPILoader.load().then(() => {
@@ -50,9 +83,18 @@ export class AppComponent implements OnInit {
     });
   }
 
-  handleAddressChange(event) {
+  handleAddressChangeCurrent(event) {
+    this.origin = { lat: event.geometry.location.lat(), lng: event.geometry.location.lng() };
+    // this.onChange(event, 'c');
+    console.log("cur");
+
+  }
+
+  handleAddressChangeDest(event) {
     this.destination = { lat: event.geometry.location.lat(), lng: event.geometry.location.lng() };
     this.onChange(event, 'c');
+    console.log("des");
+
   }
 
   onChange(event: any, code: string) {
@@ -65,6 +107,16 @@ export class AppComponent implements OnInit {
   changePolyline(event: any) {
     this.distance = event.routes[0].legs[0].distance.text;
     this.time = event.routes[0].legs[0].duration.text;
+
+    this.taxiCompanies.forEach(element => {
+      if (parseInt(this.distance) > 3) {
+        element.price = element.maxPaymentPerkm * parseInt(this.distance);
+      }
+      else {
+        element.price = element.minPaymentPerKm * parseInt(this.distance);
+      }
+      element.time = this.time
+    })
   }
 
   setCurrentLocation() {

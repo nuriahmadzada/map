@@ -1,17 +1,50 @@
 <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChange($event, 'h')">
-  <agm-marker *ngIf="!showPolylines" [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"></agm-marker>
-    <agm-direction *ngIf="showPolylines" [origin]="origin" [destination]="destination" [renderOptions]="renderOptions"
+  <agm-marker *ngIf="!showPolylines" [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true">
+  </agm-marker>
+  <agm-direction *ngIf="showPolylines" [origin]="origin" [destination]="destination" [renderOptions]="renderOptions"
     [markerOptions]="markerOptions" (onChange)="changePolyline($event)">
-    </agm-direction>
+  </agm-direction>
 </agm-map>
 
-<h4 class="mb-1">Current address: {{address}}</h4>
-<div *ngIf="distance">Distance: {{distance}}, Time: {{time}}</div>
 
-<div class="search">
-  <i class="fas fa-search"></i>
-  <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
-    (onAddressChange)="handleAddressChange($event)" class="form-control" placeholder="Ünvan daxil et" />
+<div class="col-md-6">
+  <table class="table table-striped" *ngIf="distance">
+    <thead>
+      <tr>
+        <th scope="col">Sizin üçün</th>
+        <th>Vaxt</th>
+        <th>Qiymət</th>
+        <th scope="col">Əlaqə nömrəsi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of taxiCompanies; index as i">
+        <td>
+        <img [src]="'../assets/img/' + item.icon" class="me-2" style="width: 20px">
+        {{ item.name }}
+      </td>
+        <td>{{ item.time }}</td>
+        <td>{{ item.price | number }} AZN</td>
+        <td>{{ item.contact }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="search-box">
+  <div class="current">
+    <i class="fas curr fa-search"></i>
+    <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+      (onAddressChange)="handleAddressChangeCurrent($event)" [value]="address" class="form-control"
+      placeholder="Search pick-up location" />
+  </div>
+
+  <div class="destination">
+    <i class="fas dest fa-search"></i>
+    <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+      (onAddressChange)="handleAddressChangeDest($event)" class="form-control" placeholder="Where to?" />
+  </div>
 </div>
 
 

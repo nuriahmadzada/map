@@ -1,21 +1,34 @@
 agm-map {
-  height: 400px;
+  height: 500px;
 }
 
-.search {
+.search-box {
   position: absolute;
   top: 30px;
   right: 30px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 7px grey;
 }
 
-.search .fas {
+.search-box .current, .destination {
+  position: relative;
+}
+
+.current {
+  margin-bottom: 15px;
+}
+
+.search-box .current .curr,
+.search-box .destination .dest {
   position: absolute;
   top: 12px;
   left: 10px;
   color: gray;
 }
 
-.search .form-control {
+.search-box .form-control {
   width: 350px;
   padding-left: 35px;
 }
