@@ -1,4 +1,4 @@
-<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChange($event, 'h')">
+<!-- <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChange($event, 'h')">
   <agm-marker *ngIf="!showPolylines" [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true">
   </agm-marker>
   <agm-direction *ngIf="showPolylines" [origin]="origin" [destination]="destination" [renderOptions]="renderOptions"
@@ -7,13 +7,14 @@
 </agm-map>
 
 
-<div class="col-md-6">
+<div class="col-md-6 col-sm-12">
   <table class="table table-striped" *ngIf="distance">
     <thead>
       <tr>
         <th scope="col">Sizin üçün</th>
         <th>Vaxt</th>
-        <th>Qiymət</th>
+        <th>min Qiymət</th>
+        <th>max Qiymət</th>
         <th scope="col">Əlaqə nömrəsi</th>
       </tr>
     </thead>
@@ -24,7 +25,8 @@
         {{ item.name }}
       </td>
         <td>{{ item.time }}</td>
-        <td>{{ item.price | number }} AZN</td>
+        <td>{{ item.minPrice | number }} AZN</td>
+        <td>{{ item.maxPrice | number }} AZN</td>
         <td>{{ item.contact }}</td>
       </tr>
     </tbody>
@@ -48,4 +50,9 @@
 </div>
 
 
-<app-preloader [showPreloader]="isLoading"></app-preloader>
+<app-preloader [showPreloader]="isLoading"></app-preloader> -->
+
+<header>
+  <div class="bg-dark"></div>
+  <img src="" alt="">
+</header>
