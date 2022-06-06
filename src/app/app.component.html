@@ -1,58 +1,78 @@
-<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChange($event, 'h')">
-  <agm-marker *ngIf="!showPolylines" [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true">
-  </agm-marker>
-  <agm-direction *ngIf="showPolylines" [origin]="origin" [destination]="destination" [renderOptions]="renderOptions"
-    [markerOptions]="markerOptions" (onChange)="changePolyline($event)">
-  </agm-direction>
-</agm-map>
-
-
-<div class="col-md-6 col-sm-12">
-  <table class="table table-striped" *ngIf="distance">
-    <thead>
-      <tr>
-        <th scope="col">Sizin üçün</th>
-        <th>Vaxt</th>
-        <th>min Qiymət</th>
-        <th>max Qiymət</th>
-        <th scope="col">Əlaqə nömrəsi</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of taxiCompanies; index as i">
-        <td>
-        <img [src]="'../assets/img/' + item.icon" class="me-2" style="width: 20px">
-        {{ item.name }}
-      </td>
-        <td>{{ item.time }}</td>
-        <td>{{ item.minPrice | number }} AZN</td>
-        <td>{{ item.maxPrice | number }} AZN</td>
-        <td>{{ item.contact }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-
-<div class="search-box">
-  <div class="current">
-    <i class="fas curr fa-search"></i>
-    <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
-      (onAddressChange)="handleAddressChangeCurrent($event)" [value]="address" class="form-control"
-      placeholder="Search pick-up location" />
-  </div>
-
-  <div class="destination">
-    <i class="fas dest fa-search"></i>
-    <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
-      (onAddressChange)="handleAddressChangeDest($event)" class="form-control" placeholder="Where to?" />
-  </div>
-</div>
-
-
-<app-preloader [showPreloader]="isLoading"></app-preloader>
-
-<!-- <header>
+<header>
   <div class="bg-dark"></div>
-  <img src="" alt="">
-</header> -->
+  <div class="bg-dark-menu"></div>
+  <nav class="p-5">
+    <div class="logo">
+      <img src="../assets/img/ATS.png" alt="">
+    </div>
+    <marquee class="mx-5" direction="let">ATS proqramına xoş gəlmisiniz.</marquee>
+
+    <ul>
+      <li>
+        <a href="">Ana səhifə</a>
+      </li>
+      <li>
+        <a href="">Haqqımızda</a>
+      </li>
+    </ul>
+
+  </nav>
+</header>
+
+<main>
+  <div class="map">
+    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChange($event, 'h')">
+      <agm-marker *ngIf="!showPolylines" [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true">
+      </agm-marker>
+      <agm-direction *ngIf="showPolylines" [origin]="origin" [destination]="destination" [renderOptions]="renderOptions"
+        [markerOptions]="markerOptions" (onChange)="changePolyline($event)">
+      </agm-direction>
+    </agm-map>
+    <div class="search-box">
+      <div class="current">
+        <i class="fas curr fa-search"></i>
+        <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+          (onAddressChange)="handleAddressChangeCurrent($event)" [value]="address" class="form-control"
+          placeholder="Search pick-up location" />
+      </div>
+
+      <div class="destination">
+        <i class="fas dest fa-search"></i>
+        <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+          (onAddressChange)="handleAddressChangeDest($event)" class="form-control" placeholder="Where to?" />
+      </div>
+    </div>
+  </div>
+  <div class="table-div">
+    <table class="table table-striped w-100 m-auto" *ngIf="distance">
+      <thead>
+        <tr>
+          <th scope="col">Ad</th>
+          <th>Təxmini çatdırılma vaxtı</th>
+          <th>Minimum qiymət</th>
+          <th>Maksimum qiymət</th>
+          <th scope="col">Şirkətin əlaqə nömrəsi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of taxiCompanies; index as i">
+          <td>
+            <img [src]="'../assets/img/' + item.icon" class="me-2" style="width: 40px">
+            {{ item.name }}
+          </td>
+          <td>{{ item.time }}</td>
+          <td>{{ item.minPrice | number }} AZN</td>
+          <td>{{ item.maxPrice | number }} AZN</td>
+          <td>{{ item.contact }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+
+  <app-preloader [showPreloader]="isLoading"></app-preloader>
+
+</main>
