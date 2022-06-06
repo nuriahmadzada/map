@@ -6,13 +6,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../app/shared/shared.module';
 import { AgmDirectionModule } from 'agm-direction';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
     AppComponent
-  ],
+   ],
   imports: [
     BrowserModule,
+    CoreModule,
     BrowserAnimationsModule,
     SharedModule,
     AgmCoreModule.forRoot({

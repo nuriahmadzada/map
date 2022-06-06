@@ -1,0 +1,49 @@
+<div class="map">
+  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChange($event, 'h')">
+    <agm-marker *ngIf="!showPolylines" [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true">
+    </agm-marker>
+    <agm-direction *ngIf="showPolylines" [origin]="origin" [destination]="destination" [renderOptions]="renderOptions"
+      [markerOptions]="markerOptions" (onChange)="changePolyline($event)">
+    </agm-direction>
+  </agm-map>
+  <div class="search-box">
+    <div class="current">
+      <i class="fas curr fa-search"></i>
+      <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+        (onAddressChange)="handleAddressChangeCurrent($event)" [value]="address" class="form-control"
+        placeholder="Search pick-up location" />
+    </div>
+
+    <div class="destination">
+      <i class="fas dest fa-search"></i>
+      <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+        (onAddressChange)="handleAddressChangeDest($event)" class="form-control" placeholder="Where to?" />
+    </div>
+  </div>
+</div>
+<div class="table-div">
+  <table class="table table-striped w-100 m-auto" *ngIf="distance">
+    <thead>
+      <tr>
+        <th scope="col">Ad</th>
+        <th>Təxmini çatdırılma vaxtı</th>
+        <th>Minimum qiymət</th>
+        <th>Maksimum qiymət</th>
+        <th scope="col">Şirkət ilə əlaqə</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of taxiCompanies; index as i">
+        <td class="d-flex justify-content-center align-items-center">
+          <img [src]="'../assets/img/' + item.icon" class="me-2" style="width: 40px">
+          {{ item.name }}
+        </td>
+        <td>{{ item.time }}</td>
+        <td>{{ item.minPrice | number }} AZN</td>
+        <td>{{ item.maxPrice | number }} AZN</td>
+        <td>{{ item.contact }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-preloader [showPreloader]="isLoading"></app-preloader>
