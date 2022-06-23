@@ -21,7 +21,7 @@
     </div>
   </div>
 </div>
-{{distance}}
+
 <div class="table-div">
   <table class="table table-striped w-100 m-auto" *ngIf="distance">
     <thead>
@@ -30,6 +30,7 @@
         <th>Təxmini çatdırılma vaxtı</th>
         <th>Minimum qiymət</th>
         <th>Maksimum qiymət</th>
+        <th>Məsafə</th>
         <th scope="col">Şirkət ilə əlaqə</th>
       </tr>
     </thead>
@@ -42,6 +43,7 @@
         <td>{{ item.time }}</td>
         <td>{{ item.minPrice | number }} AZN</td>
         <td>{{ item.maxPrice | number }} AZN</td>
+        <td>{{distance}}</td>
         <td>{{ item.contact }}</td>
       </tr>
     </tbody>

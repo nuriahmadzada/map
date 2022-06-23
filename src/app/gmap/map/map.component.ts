@@ -45,8 +45,8 @@ export class MapComponent implements OnInit {
       name: 'Bolt',
       icon: 'bolt.png',
       contact: 'baku@bolt.eu',
-      minPaymentPerKm: 0.24,
-      maxPaymentPerkm: 1.328,
+      minPaymentPerKm: 0.55,
+      maxPaymentPerkm: 0.28,
       minPrice: 0,
       maxPrice: 0,
       time: 0,
@@ -56,8 +56,8 @@ export class MapComponent implements OnInit {
       name: 'Uber',
       icon: 'uber.png',
       contact: '070 333 95 95',
-      minPaymentPerKm: 0.21,
-      maxPaymentPerkm: 1.219,
+      minPaymentPerKm: 0.55,
+      maxPaymentPerkm: 0.28,
       minPrice: 0,
       maxPrice: 0,
       time: 0,
@@ -67,8 +67,8 @@ export class MapComponent implements OnInit {
       name: 'Maxim',
       icon: 'maxim.png',
       contact: '*2111 və ya *3399',
-      minPaymentPerKm: 0.18,
-      maxPaymentPerkm: 1.189,
+      minPaymentPerKm: 0.60,
+      maxPaymentPerkm: 0.70,
       minPrice: 0,
       maxPrice: 0,
       time: 0,
@@ -78,8 +78,8 @@ export class MapComponent implements OnInit {
       name: 'Omega',
       icon: 'omega.png',
       contact: '*0404',
-      minPaymentPerKm: 0.18,
-      maxPaymentPerkm: 1.159,
+      minPaymentPerKm: 0.55,
+      maxPaymentPerkm: 0.28,
       minPrice: 0,
       maxPrice: 0,
       time: 0,
@@ -89,8 +89,8 @@ export class MapComponent implements OnInit {
       name: '189 Taxi',
       icon: '189Taxi.jpg',
       contact: '189',
-      minPaymentPerKm: 0.18,
-      maxPaymentPerkm: 1.199,
+      minPaymentPerKm: 0.60,
+      maxPaymentPerkm: 0.70,
       minPrice: 0,
       maxPrice: 0,
       time: 0,
@@ -100,8 +100,8 @@ export class MapComponent implements OnInit {
       name: 'Qərb Taxi',
       icon: 'qerb.png',
       contact: '158',
-      minPaymentPerKm: 0.18,
-      maxPaymentPerkm: 1.159,
+      minPaymentPerKm: 0.55,
+      maxPaymentPerkm: 0.28,
       minPrice: 0,
       maxPrice: 0,
       time: 0,
@@ -111,8 +111,8 @@ export class MapComponent implements OnInit {
       name: 'Salam Taxi',
       icon: 'salamTaxi.png',
       contact: '*9933',
-      minPaymentPerKm: 0.18,
-      maxPaymentPerkm: 1.199,
+      minPaymentPerKm: 0.60,
+      maxPaymentPerkm: 0.70,
       minPrice: 0,
       maxPrice: 0,
       time: 0,
@@ -122,8 +122,8 @@ export class MapComponent implements OnInit {
       name: 'Ekonom Taxi',
       icon: 'ekonom.jpg',
       contact: '*9111',
-      minPaymentPerKm: 0.18,
-      maxPaymentPerkm: 1.189,
+      minPaymentPerKm: 0.60,
+      maxPaymentPerkm: 0.70,
       minPrice: 0,
       maxPrice: 0,
       time: 0,
@@ -133,8 +133,8 @@ export class MapComponent implements OnInit {
       name: '1Taxi',
       icon: '1Taxi.jpg',
       contact: '+994 50-607-0-111',
-      minPaymentPerKm: 0.18,
-      maxPaymentPerkm: 1.169,
+      minPaymentPerKm: 0.60,
+      maxPaymentPerkm: 0.70,
       minPrice: 0,
       maxPrice: 0,
       time: 0,
@@ -144,15 +144,15 @@ export class MapComponent implements OnInit {
       name: 'Ailə Taxi',
       icon: 'aileTaksi.png',
       contact: '*8555',
-      minPaymentPerKm: 0.18,
-      maxPaymentPerkm: 1.179,
+      minPaymentPerKm: 0.55,
+      maxPaymentPerkm: 0.28,
       minPrice: 0,
       maxPrice: 0,
       time: 0,
     },
   ];
 
-  constructor(private mapsAPILoader: MapsAPILoader) {}
+  constructor(private mapsAPILoader: MapsAPILoader) { }
 
   ngOnInit() {
     this.mapsAPILoader.load().then(() => {
@@ -185,9 +185,9 @@ export class MapComponent implements OnInit {
     this.destination =
       code === 'c'
         ? {
-            lat: event.geometry.location.lat(),
-            lng: event.geometry.location.lng(),
-          }
+          lat: event.geometry.location.lat(),
+          lng: event.geometry.location.lng(),
+        }
         : (this.destination = { lat: event.coords.lat, lng: event.coords.lng });
   }
 
@@ -196,14 +196,18 @@ export class MapComponent implements OnInit {
     this.time = event.routes[0].legs[0].duration.text;
 
     this.taxiCompanies.forEach((element) => {
-      if (parseInt(this.distance) > 3) {
-        element.minPrice = element.minPaymentPerKm * parseInt(this.distance);
-      } else {
+      if (parseInt(this.distance) < 5) {
         element.minPrice = element.maxPaymentPerkm * parseInt(this.distance);
+      } else {
+        element.minPrice = element.minPaymentPerKm * parseInt(this.distance);
+      } 
+      if (element.minPrice == 0) {
+        element.minPrice = 1
+      } else {
+        element.maxPrice = Math.ceil(element.minPrice);
+        element.minPrice = Math.floor(element.minPrice);
       }
-      element.maxPrice = Math.ceil(element.minPrice);
-      element.minPrice = Math.floor(element.minPrice);
-      
+
       element.time = this.time;
     });
   }
